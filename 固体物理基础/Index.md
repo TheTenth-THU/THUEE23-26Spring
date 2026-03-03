@@ -6,7 +6,7 @@ longform:
   sceneFolder: /
   scenes:
     - 金属电子论初步
-    - 晶体的结构
+    - 固体的结构
   ignoredFiles: []
 ---
 ## 授课教师
