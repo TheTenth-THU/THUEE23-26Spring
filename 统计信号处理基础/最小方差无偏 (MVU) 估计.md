@@ -106,18 +106,18 @@ $$
 
 据此，可以考察某些参数变换是否保持有效估计量的有效性：
 + 对**线性变换** $\alpha = a\theta + b$，若有 $\hat{\theta}$ 是 $\theta$ 的有效估计量，则
-$$
-\begin{align}
-&\mathbb{E} \left[ \hat{\alpha} \right] = \mathbb{E} \left[ a\hat{\theta} + b \right] = a\mathbb{E} \left[ \hat{\theta} \right] + b = a\theta + b = \alpha \\
-&\mathrm{var}(\hat{\alpha}) = a^{2} \mathrm{var}(\hat{\theta}) = a^{2} \cdot \mathrm{CRLB}(\hat{\theta}) = \mathrm{CRLB}(\hat{\alpha})
-\end{align}
-$$
-因此线性变换**保持有效估计量的有效性**。
+	$$
+	\begin{align}
+	&\mathbb{E} \left[ \hat{\alpha} \right] = \mathbb{E} \left[ a\hat{\theta} + b \right] = a\mathbb{E} \left[ \hat{\theta} \right] + b = a\theta + b = \alpha \\
+	&\mathrm{var}(\hat{\alpha}) = a^{2} \mathrm{var}(\hat{\theta}) = a^{2} \cdot \mathrm{CRLB}(\hat{\theta}) = \mathrm{CRLB}(\hat{\alpha})
+	\end{align}
+	$$
+	因此线性变换**保持有效估计量的有效性**。
 + 对**非线性变换** $\alpha = g(\theta)$，若有 $\hat{\theta}$ 是 $\theta$ 的有效估计量，则
-$$
-\mathbb{E} \left[ \hat{\alpha} \right] = \mathbb{E} \left[ g(\hat{\theta}) \right] \neq g\left(\mathbb{E} [ \hat{\theta} ]\right) = g(\theta) = \alpha
-$$
-因此此估计是**有偏的**，因此非线性变换**不保持有效估计量的有效性**。
+	$$
+	\mathbb{E} \left[ \hat{\alpha} \right] = \mathbb{E} \left[ g(\hat{\theta}) \right] \neq g\left(\mathbb{E} [ \hat{\theta} ]\right) = g(\theta) = \alpha
+	$$
+	因此此估计是**有偏的**，因此非线性变换**不保持有效估计量的有效性**。
 
 ---
 
