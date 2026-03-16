@@ -494,7 +494,7 @@ $$
 > $$
 > 1. 是 $\theta$ 的一个**{适用|与真值无关}**的**无偏**估计量；
 > 2. 对所有 $\theta$，都有 $\mathrm{var}(\hat{\theta}) \le \mathrm{var}(\check{\theta})$；
-> 3. 若 $T(\v{x})$ 是 $\theta$ 的一个**完备**的充分统计量，则 $\hat{\theta}$ 是 $\theta$ 的一个**MVU 估计量**。
+> 3. 若 $T(\v{x})$ 是 $\theta$ 的一个**完备**的充分统计量，则 $\hat{\theta}$ 是 $\theta$ 的一个 **MVU 估计量**。
 
 利用RBLS定理求解MVU估计量的步骤如下：
 1. 利用Neyman-Fisher因子分解定理求出充分统计量 $T(\v{x})$；
