@@ -7,6 +7,7 @@ longform:
   scenes:
     - 经典参数估计
     - - 最小方差无偏 (MVU) 估计
+      - 最大似然估计 (MLE)
   ignoredFiles: []
 ---
 ## 课程内容
