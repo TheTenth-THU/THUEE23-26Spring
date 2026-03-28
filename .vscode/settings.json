@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python \"scripts/extract_pdf_text\\.py\" \"固体物理基础/\\.raw/260224-2143 - 5-固体的结合\\.pdf\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
