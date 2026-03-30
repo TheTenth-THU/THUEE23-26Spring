@@ -7,7 +7,9 @@ longform:
   scenes:
     - 经典参数估计
     - - 最小方差无偏 (MVU) 估计
+      - 最佳线性无偏估计 (BLUE)
       - 最大似然估计 (MLE)
+      - 最小二乘估计
   ignoredFiles: []
 ---
 ## 课程内容
