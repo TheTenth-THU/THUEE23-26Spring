@@ -11,6 +11,10 @@ longform:
       - 最大似然估计 (MLE)
       - 最小二乘估计 (LSE)
     - Bayes估计
+    - - 最小均方误差 (MMSE) 估计
+      - 最小绝对误差 (MAE) 估计
+      - 最大后验概率 (MAP) 估计
+      - 线性最小均方误差 (LMMSE) 估计
   ignoredFiles: []
 ---
 ## 课程内容
