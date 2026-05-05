@@ -15,6 +15,7 @@ longform:
       - 最小绝对误差 (MAE) 估计
       - 最大后验概率 (MAP) 估计
       - 线性最小均方误差 (LMMSE) 估计
+    - Wiener滤波与Kalman滤波
   ignoredFiles: []
 ---
 ## 课程内容

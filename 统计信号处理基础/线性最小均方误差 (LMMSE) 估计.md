@@ -84,7 +84,7 @@ $$
 > & \boldsymbol{C}_{AA} = \mathbb{E} \left[ (A - \mathbb{E}[A])^{2} \right] = \sigma_{A}^{2}
 > \end{align}
 > $$
-> $\boldsymbol{C}_{xx}$ 求逆得到
+> 由**Woodbury恒等式 $\left( \boldsymbol{B} + \v{u} \v{u}^{\mathrm{T}} \right)^{-1} = \boldsymbol{B}^{-1} - \dfrac{\boldsymbol{B}^{-1} \v{u} \v{u}^{\mathrm{T}} \boldsymbol{B}^{-1}}{1 + \v{u}^{\mathrm{T}}\boldsymbol{B}^{-1}\v{u}}$**，对 $\boldsymbol{C}_{xx}$ 求逆得到
 > $$
 > \boldsymbol{C}_{xx}^{-1} = \frac{1}{\sigma^{2}} \left( \boldsymbol{I} - \frac{\sigma_{A}^{2}}{N\sigma_{A}^{2} + \sigma^{2}} \v{1} \v{1}^{\mathrm{T}} \right)
 > $$
@@ -153,10 +153,50 @@ $$
 > \hat{A}[N-1] = \frac{\sigma_{A}^{2}}{N\sigma_{A}^{2} + \sigma^{2}} \sum\limits_{n=0}^{N-1} x[n], \qquad \mathrm{Bmse}(\hat{A}[N-1]) = \frac{\sigma_{A}^{2} \sigma^{2}}{N\sigma_{A}^{2} + \sigma^{2}}
 > $$
 > 当获得第 $N$ 个观测数据 $x[N]$ 后，如何更新获得 $A$ 的LMMSE估计量 $\hat{A}[N]$ 及 $\mathrm{Bmse}(\hat{A}[N])$？
+> 
+> ---
+> 
+> 当获得第 $N$ 个观测数据 $x[N]$ 后，更新的 **LMMSE估计量**为
+> $$
+> \begin{align}
+> \hat{A}[N] &= \frac{\sigma_{A}^{2}}{(N+1)\sigma_{A}^{2} + \sigma^{2}} \sum\limits_{n=0}^{N} x[n] = \frac{\sigma_{A}^{2}}{(N+1)\sigma_{A}^{2} + \sigma^{2}} \left( \sum\limits_{n=0}^{N-1} x[n] + x[N] \right) \\
+> &= \frac{\sigma_{A}^{2}}{(N+1)\sigma_{A}^{2} + \sigma^{2}} \left( \frac{N \sigma_{A}^{2} + \sigma^{2}}{\sigma_{A}^{2}} \hat{A}[N-1] + x[N] \right) \\
+> &= \hat{A}[N-1] + \underbrace{ \frac{\sigma_{A}^{2}}{(N+1)\sigma_{A}^{2} + \sigma^{2}} }_{ K[N] } \left( x[N] - \hat{A}[N-1] \right)
+> \end{align}
+> $$
+> 可见，更新的LMMSE估计量 $\hat{A}[N]$ 相对前一个估计量 $\hat{A}[N-1]$ 的增量是**新息 $x[N] - \hat{A}[N-1]$ 的 $K[N]$ 增益缩放**，其中增益因子 $K[N]$ 的形式为
+> $$
+> K[N] = \frac{\sigma_{A}^{2}}{\sigma_{A}^{2} + N\sigma_{A}^{2} + \sigma^{2}} 
+> = \frac{\frac{\sigma_{A}^{2} \sigma^{2}}{N\sigma_{A}^{2} + \sigma^{2}}}{\frac{\sigma_{A}^{2} \sigma^{2}}{N\sigma_{A}^{2} + \sigma^{2}} + \sigma^{2}}
+> = \frac{\mathrm{Bmse}(\hat{A}[N-1])}{\mathrm{Bmse}(\hat{A}[N-1]) + \sigma^{2}}
+> $$
+> 而更新的 **Bayes均方误差**为
+> $$
+> \begin{align}
+> \mathrm{Bmse}(\hat{A}[N]) &= \frac{\sigma_{A}^{2} \sigma^{2}}{(N+1)\sigma_{A}^{2} + \sigma^{2}} = \frac{N\sigma_{A}^{2} + \sigma^{2}}{(N+1)\sigma_{A}^{2} + \sigma^{2}} \cdot \frac{\sigma_{A}^{2} \sigma^{2}}{N\sigma_{A}^{2} + \sigma^{2}} \\
+> &= \left( 1 - \frac{\sigma_{A}^{2}}{(N+1)\sigma_{A}^{2} + \sigma^{2}} \right) \cdot \frac{\sigma_{A}^{2} \sigma^{2}}{N\sigma_{A}^{2} + \sigma^{2}} = (1 - K[N]) \cdot \mathrm{Bmse}(\hat{A}[N-1])
+> \end{align}
+> $$
+> 
 
-对LMMSE估计量，当获得第 $N$ 个观测数据 $x[N]$ 后，更新的LMMSE估计量为
+一般地，**序贯LMMSE估计**的更新公式为
 $$
-\begin{align}
-\hat{A}[N] &= \frac{\sigma_{A}^{2}}{(N+1)\sigma_{A}^{2} + \sigma^{2}} \sum\limits_{n=0}^{N} x[n] = \frac{\sigma_{A}^{2}}{(N+1)\sigma_{A}^{2} + \sigma^{2}} \left( \sum\limits_{n=0}^{N-1} x[n] + x[N] \right) \\
-\end{align}
+\begin{cases}
+\hat{\theta}[N] = \hat{\theta}[N-1] + K[N] \left( x[N] - \hat{\theta}[N-1] \right), \\
+\mathrm{Bmse}(\hat{\theta}[N]) = (1 - K[N]) \cdot \mathrm{Bmse}(\hat{\theta}[N-1]),
+\end{cases} \qquad
+N = 1, 2, \cdots
+$$
+其中，增益因子 $K[N] = \dfrac{\mathrm{Bmse}(\hat{\theta}[N-1])}{\mathrm{Bmse}(\hat{\theta}[N-1]) + \sigma_{w}^{2}}$，$\sigma_{w}^{2}$ 是新观测数据 $x[N]$ 的噪声方差。
+
+特别地，在[[#^ExampleLMMSE|前一示例]]中取 $N = 1$ 时，仅有一个观测数据 $x[0]$，由原始公式得LMMSE估计量及其Bayes MSE为
+$$
+\begin{cases}
+\hat{A}[0] = \mathbb{E}[A] + \frac{\sigma_{A}^{2}}{\sigma_{A}^{2} + \sigma^{2}} (x[0] - \mathbb{E}[x[0]]), \\
+\mathrm{Bmse}(\hat{A}[0]) = \sigma_{A}^{2} - \dfrac{\sigma_{A}^{4}}{\sigma_{A}^{2} + \sigma^{2}} = \sigma_{A}^{2} \left( 1 - \frac{\sigma_{A}^{2}}{\sigma_{A}^{2} + \sigma^{2}} \right) 
+\end{cases}
+$$
+若取 $\begin{cases} \hat{A}[-1] = \mathbb{E} \left[ A \right], \\ \mathrm{Bmse}(\hat{A}[-1]) = \sigma_{A}^{2} \end{cases}$ 作为初始值，则上述更新公式将同样适用。推广到一般的序贯LMMSE估计中，**初始值**即取为**先验值**
+$$
+\hat{\theta}[-1] = \mathbb{E}[\theta], \qquad \mathrm{Bmse}(\hat{\theta}[-1]) = \boldsymbol{C}_{\theta \theta}
 $$
