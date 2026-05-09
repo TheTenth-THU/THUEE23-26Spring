@@ -105,6 +105,34 @@ $$
 
 ### MMSE的性能分析
 
+
+### MMSE估计量的性质
+
+#### 线性变换不变性
+
+若 $\v{\alpha} = \boldsymbol{A} \v{\theta} + \v{b}$ 是 $\v{\theta}$ 的线性变换，其中 $\boldsymbol{A}$ 是可逆矩阵，$\v{b}$ 是常数向量，则 $\v{\alpha}$ 的MMSE估计量为 $\hat{\v{\alpha}} = \boldsymbol{A} \hat{\v{\theta}} + \v{b}$。
+
+#### 对待估计参数可加性
+
+设 $\v{\theta} = \v{\theta}_{1} + \v{\theta}_{2}$，其中 $\v{\theta}_{1}$ 和 $\v{\theta}_{2}$ 是两个待估计随机向量，则相应MMSE估计量是可加的，即
+$$
+\hat{\v{\theta}} = \mathbb{E} \left[ \v{\theta} \mid[\Big] \v{x} \right] = \mathbb{E} \left[ \v{\theta}_{1} + \v{\theta}_{2} \mid[\Big] \v{x} \right] = \mathbb{E} \left[ \v{\theta}_{1} \mid[\Big] \v{x} \right] + \mathbb{E} \left[ \v{\theta}_{2} \mid[\Big] \v{x} \right] = \hat{\v{\theta}}_{1} + \hat{\v{\theta}}_{2}
+$$
+
+#### 对独立Guass数据矢量可加性
+
+对于Gauss先验、Gauss数据分布，MMSE估计量亦为[[线性最小均方误差 (LMMSE) 估计]]估计量
+$$
+\hat{\v{\theta}} = \mathbb{E} \left[ \v{\theta} \mid[\Big] \v{x} \right] = \mathbb{E} \left[ \v{\theta} \right] + \boldsymbol{C}_{\theta x} \boldsymbol{C}_{xx}^{-1} (\v{x} - \mathbb{E}[\v{x}])
+$$
+若 $\v{\theta}, \v{x}_{1}, \v{x}_{2}$ 是联合Gauss的，数据矢量 $\v{x} = \v{x}_{1} + \v{x}_{2}$，且 $\v{x}_{1}$ 和 $\v{x}_{2}$ 相互独立，则MMSE估计量为
+$$
+\begin{align}
+\hat{\v{\theta}} = \mathbb{E} \left[ \v{\theta} \mid[\Big] \v{x} \right] &= \mathbb{E} \left[ \v{\theta} \right] + \boldsymbol{C}_{\theta x_{1}} \boldsymbol{C}_{x_{1} x_{1}}^{-1} (\v{x}_{1} - \mathbb{E}[\v{x}_{1}]) + \boldsymbol{C}_{\theta x_{2}} \boldsymbol{C}_{x_{2} x_{2}}^{-1} (\v{x}_{2} - \mathbb{E}[\v{x}_{2}]) \\
+&= \mathbb{E} \left[ \v{\theta} \mid[\Big] \v{x}_{1} \right] + \mathbb{E} \left[ \v{\theta} \mid[\Big] \v{x}_{2} \right] - \mathbb{E} \left[ \v{\theta} \right]
+\end{align}
+$$
+
 ## 矢量参数MMSE估计
 
 当存在未知而不感兴趣的参数时，Bayes框架下可**通过积分消除这些参数**的影响，即
