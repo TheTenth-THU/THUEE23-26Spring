@@ -18,6 +18,7 @@ longform:
       - Wiener滤波
       - Kalman滤波
     - 信号检测
+    - - 简单假设检验
   ignoredFiles: []
 ---
 ## 课程内容
