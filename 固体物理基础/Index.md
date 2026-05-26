@@ -11,6 +11,7 @@ longform:
     - 固体能带理论
     - 固体的电特性
     - - 𝑝𝑛结
+      - Schottky结
   ignoredFiles: []
 ---
 ## 授课教师
