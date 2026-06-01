@@ -12,6 +12,7 @@ longform:
     - 固体的电特性
     - - 𝑝𝑛结
       - Schottky结
+    - 晶格振动和固体热性质
   ignoredFiles: []
 ---
 ## 授课教师
