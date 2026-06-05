@@ -1,0 +1,24 @@
+{
+  "id": "conv-1780367827797-vriuzw4iy",
+  "providerId": "claude",
+  "title": "Complete 1D monatomic/diatomic lattice waves",
+  "titleGenerationStatus": "success",
+  "createdAt": 1780367827804,
+  "updatedAt": 1780370291857,
+  "lastResponseAt": 1780370291856,
+  "sessionId": "8462d3af-a29f-4d2c-b9d1-afc3f66e1fe2",
+  "providerState": {
+    "providerSessionId": "8462d3af-a29f-4d2c-b9d1-afc3f66e1fe2"
+  },
+  "currentNote": "固体物理基础/固体的热特性.md",
+  "usage": {
+    "model": "deepseek-v4-pro[1m]",
+    "inputTokens": 597,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 43264,
+    "contextWindow": 1000000,
+    "contextTokens": 43861,
+    "percentage": 4,
+    "contextWindowIsAuthoritative": true
+  }
+}
