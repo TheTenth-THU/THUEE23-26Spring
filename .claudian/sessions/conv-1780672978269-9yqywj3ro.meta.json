@@ -1,0 +1,24 @@
+{
+  "id": "conv-1780672978269-9yqywj3ro",
+  "providerId": "claude",
+  "title": "Debug Obsidian Longform plugin config issue",
+  "titleGenerationStatus": "success",
+  "createdAt": 1780672978270,
+  "updatedAt": 1780673065698,
+  "lastResponseAt": 1780673065697,
+  "sessionId": "b57c7623-cc16-4e9f-a640-f413ff40aafb",
+  "providerState": {
+    "providerSessionId": "b57c7623-cc16-4e9f-a640-f413ff40aafb"
+  },
+  "currentNote": "统计信号处理基础/Index.md",
+  "usage": {
+    "model": "deepseek-v4-pro[1m]",
+    "inputTokens": 184,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 23296,
+    "contextWindow": 1000000,
+    "contextTokens": 23480,
+    "percentage": 2,
+    "contextWindowIsAuthoritative": true
+  }
+}

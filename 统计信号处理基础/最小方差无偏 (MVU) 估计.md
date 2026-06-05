@@ -63,7 +63,7 @@ CRLB 可用于评价一个无偏估计是否为 MVU 估计：
 + 若 $\mathrm{var}(\hat{\theta}) = \mathrm{CRLB}(\hat{\theta})$，则 $\hat{\theta}$ 是最佳的 MVU 估计。
 + 若 $\mathrm{var}(\hat{\theta}) > \mathrm{CRLB}(\hat{\theta})$，则 $\hat{\theta}$ 可能不是 MVU 估计。
 
-> [!example]- 计算估计的CRLB：示例
+> [!example]- 计算估计的CRLB：示例 ^Example-2-1
 > 
 > **电平估计。** 
 > 
@@ -94,7 +94,7 @@ CRLB 可用于评价一个无偏估计是否为 MVU 估计：
 > \end{align}
 > $$
 > 因此 CRLB 为 $\mathrm{var}(\hat{A}) \geq \cfrac{1}{N/\sigma^{2}} = \cfrac{\sigma^{2}}{N}$。
-^Example-2-1
+
 
 #### 使用 CRLB 求解有效估计量
 
@@ -102,7 +102,7 @@ CRLB 还可用于求解 MVU 估计量，将对数似然函数的导数表达为 
 + $\mathcal{I}(\theta)$ 是 $\theta$ 的函数，**不能与观测数据 $\v{x}$ 有关**。
 + $g(\v{x})$ 是 $\v{x}$ 的函数，**不能与待估计参数 $\theta$ 有关**。
 
-> [!example]- 使用CRLB求解MVU：示例
+> [!example]- 使用CRLB求解MVU：示例 
 > 
 > **电平估计。** 
 > 
