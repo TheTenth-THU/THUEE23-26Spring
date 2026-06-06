@@ -1,0 +1,27 @@
+{
+  "id": "conv-1780677556096-zv1btm7pe",
+  "providerId": "claude",
+  "title": "Create notes for Chapter 12 hypothesis test",
+  "titleGenerationStatus": "success",
+  "createdAt": 1780677556096,
+  "updatedAt": 1780677771623,
+  "lastResponseAt": 1780677771622,
+  "sessionId": "e9190efe-d5cd-448f-b558-f226a34ccae7",
+  "providerState": {
+    "providerSessionId": "e9190efe-d5cd-448f-b558-f226a34ccae7"
+  },
+  "currentNote": "统计信号处理基础/复合假设检验.md",
+  "externalContextPaths": [
+    "E:\\Schoolworks\\Tsinghua\\2025-2026-S3 春季\\课程\\Web Learning Files\\统计信号处理基础\\Materials - 本学期课件"
+  ],
+  "usage": {
+    "model": "deepseek-v4-pro[1m]",
+    "inputTokens": 6925,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 46720,
+    "contextWindow": 1000000,
+    "contextTokens": 53645,
+    "percentage": 5,
+    "contextWindowIsAuthoritative": true
+  }
+}

@@ -19,6 +19,7 @@ longform:
       - Kalman滤波
     - 信号检测
     - - 简单假设检验
+      - 复合假设检验
   ignoredFiles: []
 ---
 ## 课程内容
