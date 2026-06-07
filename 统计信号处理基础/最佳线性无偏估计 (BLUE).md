@@ -37,7 +37,7 @@ $$
 $$
 进而得到BLUE估计量为
 $$
-\hat{\theta} = \v{a}_{\mathrm{opt}}^{\mathrm{T}} \v{x} = \frac{\v{s}^{\mathrm{T}} \boldsymbol{C}^{-1} \v{x}}{\v{s}^{\mathrm{T}} \boldsymbol{C}^{-1} \v{s}}
+\mark{ \hat{\theta} = \v{a}_{\mathrm{opt}}^{\mathrm{T}} \v{x} = \frac{\v{s}^{\mathrm{T}} \boldsymbol{C}^{-1} \v{x}}{\v{s}^{\mathrm{T}} \boldsymbol{C}^{-1} \v{s}} }
 $$
 其方差为
 $$

@@ -1,0 +1,24 @@
+{
+  "id": "conv-1780762304951-0txn9gd7o",
+  "providerId": "claude",
+  "title": "Explain regular conditions in statistics",
+  "titleGenerationStatus": "success",
+  "createdAt": 1780762304952,
+  "updatedAt": 1780766654880,
+  "lastResponseAt": 1780766654880,
+  "sessionId": "941a96d5-667f-43e2-bae5-05e6b1ed335a",
+  "providerState": {
+    "providerSessionId": "941a96d5-667f-43e2-bae5-05e6b1ed335a"
+  },
+  "currentNote": "统计信号处理基础/最小方差无偏 (MVU) 估计.md",
+  "usage": {
+    "model": "deepseek-v4-pro[1m]",
+    "inputTokens": 615,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 23552,
+    "contextWindow": 1000000,
+    "contextTokens": 24167,
+    "percentage": 2,
+    "contextWindowIsAuthoritative": true
+  }
+}

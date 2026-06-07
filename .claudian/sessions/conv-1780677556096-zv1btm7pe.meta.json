@@ -4,8 +4,8 @@
   "title": "Create notes for Chapter 12 hypothesis test",
   "titleGenerationStatus": "success",
   "createdAt": 1780677556096,
-  "updatedAt": 1780761746607,
-  "lastResponseAt": 1780760508303,
+  "updatedAt": 1780763085936,
+  "lastResponseAt": 1780763069884,
   "sessionId": "e9190efe-d5cd-448f-b558-f226a34ccae7",
   "providerState": {
     "providerSessionId": "e9190efe-d5cd-448f-b558-f226a34ccae7"
@@ -22,6 +22,5 @@
     "contextWindow": 1000000,
     "contextTokens": 0,
     "percentage": 0
-  },
-  "resumeAtMessageId": "bfe1b046-b7d8-4b22-b141-bbb1a1a24330"
+  }
 }

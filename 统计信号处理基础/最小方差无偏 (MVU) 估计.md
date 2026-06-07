@@ -138,7 +138,7 @@ CRLB 还可用于求解 MVU 估计量，将对数似然函数的导数表达为 
 + 对**线性变换** $\alpha = a\theta + b$，若有 $\hat{\theta}$ 是 $\theta$ 的有效估计量，则
 	$$
 	\begin{align}
-	&\mathbb{E} \left[ \hat{\alpha} \right] = \mathbb{E} \left[ a\hat{\theta} + b \right] = a\mathbb{E} \left[ \hat{\theta} \right] + b = a\theta + b = \alpha \\
+	&\mathbb{E} \left[ \hat{\alpha} \right] = a\mathbb{E} \left[ \hat{\theta} \right] + b = a\theta + b = \alpha \\
 	&\mathrm{var}(\hat{\alpha}) = a^{2} \mathrm{var}(\hat{\theta}) = a^{2} \cdot \mathrm{CRLB}(\hat{\theta}) = \mathrm{CRLB}(\hat{\alpha})
 	\end{align}
 	$$
@@ -214,9 +214,18 @@ $$
 
 ## MVU 基本求解方法
 
-上述[[#使用 CRLB 求解有效估计量]]的方法是通过 CRLB 来求解 MVU 估计量的一种方法。然而，其求出的一定是**有效估计量**，但很多情形下MVU不一定达到CRLB，因此不能由该方法求解出 MVU 估计量。
+上述[[#使用 CRLB 求解有效估计量]]的方法是通过 CRLB 来求解 MVU 估计量的一种方法。然而，其求出的一定是**有效估计量**，但很多情形下 **MVU不一定达到CRLB**，因此不能由该方法求解出 MVU 估计量。
 
-### 线性模型方法
+```tx
+| 方法 | 适用情况 ||
+| ^^ | 有效估计量 | 非有效估计量 |
+| :--- | :--- | :--- |
+| CRLB方法 | 若存在，一定可求解，须构造 $\frac{ \partial \ln p\left( \v{x};\theta \right) }{ \partial \theta } = \mathcal{I}(\theta) \left( g\left( \v{x} \right) - \theta \right)$ | 不适用 |
+| **[[#特例方法：线性模型方法\|线性模型方法]]** | 对于线性测量模型，若存在，一定可求解，且可直接套用公式 | 不适用 |
+| **[[#一般方法：充分统计量方法\|充分统计量方法]]** | 若存在，可能可求解 | 可能可求解 |
+```
+
+### 特例方法：线性模型方法
 
 #### 简单线性模型方法
 
@@ -399,8 +408,8 @@ $$
 #### 线性模型的拓展
 
 上述线性模型的求解方法也适用于以下两种情况：
-1. **允许Gauss噪声有色**，即 $\v{w} \sim \mathcal{N}(\v{0}, \boldsymbol{C})$，其中 $\boldsymbol{C}$ 是一个 $N \times N$ 的协方差矩阵，此时 MVU 估计量为 $\hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \v{x}$，协方差矩阵为 $\boldsymbol{C}_{\hat{\v{\theta}}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H})^{-1}$。
-2. **允许观测数据 $\v{x}$ 含有已知信号 $\v{s}$**，即 $\v{x} = \boldsymbol{H} \v{\theta} + \v{s} + \v{w}$，其中 $\v{s}$ 是一个已知的 $N$ 维信号，此时 MVU 估计量为 $\hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} (\v{x} - \v{s})$，协方差矩阵为 $\boldsymbol{C}_{\hat{\v{\theta}}} = \sigma^{2} (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1}$。
+1. **允许Gauss噪声有色**，即 $\v{w} \sim \mathcal{N}(\v{0}, \boldsymbol{C})$，其中 $\boldsymbol{C}$ 是一个 $N \times N$ 的协方差矩阵。此时 MVU 估计量为 $\hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \v{x}$，协方差矩阵为 $\boldsymbol{C}_{\hat{\v{\theta}}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H})^{-1}$。
+2. **允许观测数据 $\v{x}$ 含有已知信号 $\v{s}$**，即 $\v{x} = \boldsymbol{H} \v{\theta} + \v{s} + \v{w}$，其中 $\v{s}$ 是一个已知的 $N$ 维信号。此时 MVU 估计量为 $\hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} (\v{x} - \v{s})$，协方差矩阵为 $\boldsymbol{C}_{\hat{\v{\theta}}} = \sigma^{2} (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1}$。
 
 > [!theorem] 线性模型的MVU估计量
 > 
@@ -413,7 +422,7 @@ $$
 > \boldsymbol{C}_{\hat{\v{\theta}}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H})^{-1}
 > $$
 
-### 充分统计量方法
+### 一般方法：充分统计量方法
 
 #### 充分统计量及其完备性
 
@@ -470,11 +479,16 @@ $$
 > [!definition] 充分统计量的完备性
 > 若对 $\theta$ 的充分统计量 $T$，方程
 > $$
-> \dint_{-\infty}^{\infty} \nu(T) p(T; \theta) \dif T = 0 
+> \mathbb{E} \left[ \nu(T) \right] = \dint_{-\infty}^{\infty} \nu(T) p(T; \theta) \dif T = 0 
 > $$
 > 在任意 $\theta$ 下都只对 $\nu(T) = 0$ 成立，则称 $T$ 是 $\theta$ 的一个**完备 (complete)** 的充分统计量。
 
 所谓「完备」，是指充分统计量的分布族中不存在非零函数 $\nu(\cdot)$ 与该分布族中的每个分布都正交，即不存在非零函数 $\nu(\cdot)$ 满足 $\mathbb{E} \left[ \nu(T) \right] = 0$ 对任意 $\theta$ 都成立。这样，**满足无偏性约束 $\mathbb{E} \left[ \hat{\theta} \right] = \theta$ 的估计量 $\hat{\theta} = g(T)$ 只有至多唯一的解**，若存在，则该解就是 MVU 估计量。
+
+对于多个充分统计量（对应于多个待估计参数）的情况，完备性要求
+$$
+\mathbb{E} \left[ \nu(\v{T}) \right] = \idotsint_{-\infty}^{\infty} \nu(\v{T}) p_{T_{n} \mid T_{(1:n-1)}}(T_{n}; \v{\theta}) \dif T_{n} \cdots p_{T_{1}}(T_{1}; \v{\theta}) \dif T_{1} = 0 \iff \nu(\v{T}) \equiv 0, \qquad \forall \v{\theta}
+$$
 
 #### 利用RBLS定理求MVU估计量
 
@@ -490,7 +504,7 @@ $$
 > [!theorem] {Rao|拉奥}-{Black|布莱克}-{Lehmann|莱曼}-{Scheffé|谢费} (RBLS) 定理
 > 若有 $\check{\theta}$ 是 $\theta$ 的一个无偏估计量，$T(\v{x})$ 是 $\theta$ 的一个充分统计量，则估计量
 > $$
-> \hat{\theta} = \mathbb{E} \left[ \check{\theta} \mid T(\v{x}) \right]
+> \hat{\theta} = \mathbb{E} \left[ \check{\theta} \mid[\Big] T(\v{x}) \right]
 > $$
 > 1. 是 $\theta$ 的一个**{适用|与真值无关}**的**无偏**估计量；
 > 2. 对所有 $\theta$，都有 $\mathrm{var}(\hat{\theta}) \le \mathrm{var}(\check{\theta})$；
@@ -501,11 +515,79 @@ $$
 2. 检查 $T(\v{x})$ 是否**完备**；
 3. 若完备，则**任选一个无偏估计量 $\check{\theta}$ 计算 $\hat{\theta} = \mathbb{E} \left[ \check{\theta} \mathop{\Big|} T(\v{x}) \right]$**，或**直接{找到|凑出}无偏函数 $\hat{\theta} = f(T(\v{x}))$**，即得到MVU 估计量 $\hat{\theta}$。
 
-```tx
-| 方法 | 适用情况 ||
-| ^^ | 有效估计量（若存在） | 非有效估计量 |
-| :--- | :--- | :--- |
-| CRLB | 一定可求解 | 不适用 |
-| 线性模型 | 一定可求解 | 不适用 |
-| 充分统计量 | 可能可求解 | 可能可求解 |
-```
+> [!example] 使用充分统计量方法求解MVU：示例
+> 
+> **提取已知频率的正弦分量。**
+> 假设一个已知频率 $f_{0}$ 的正弦分量被埋在 Gauss 白噪声中，即测量系统为
+> $$
+> x[n] = A \cos(2\pi f_{0} n) + w[n], \qquad n = 0, 1, \cdots, N-1
+> $$
+> 其中 $w[n]$ 是一个均值为0、方差为 $\sigma^{2}$ 的 Gauss 白噪声，求振幅 $A$ 和噪声方差 $\sigma^{2}$ 的 MVU 估计量。
+> 
+> ---
+> 
+> 若 $\sigma^2$ 已知，则这一估计问题能比较容易地通过[[#特例方法：线性模型方法|线性模型]]求解，但很遗憾 $\sigma^2$ 是未知的，只好尝试充分统计量方法。
+> 
+> **1. 利用Neyman-Fisher因子分解定理求出充分统计量。**
+> 
+> $\v{x}$ 的 PDF 由 $A$ 和 $\sigma^2$ 两个参数决定
+> $$
+> \begin{align} 
+> p\left( \v{x}; A, \sigma^{2} \right) &= \prod_{n=0}^{N-1} \frac{1}{\sqrt{2\pi\sigma^{2}}} \exp \left( -\frac{(x[n] - A \cos(2\pi f_{0} n))^{2}}{2\sigma^{2}} \right) \\
+> &= \frac{1}{(2\pi\sigma^{2})^{N/2}} \exp \left( -\frac{1}{2\sigma^{2}} \sum_{n=0}^{N-1} (x[n] - A \cos(2\pi f_{0} n))^{2} \right) \\
+> &= \frac{1}{(2\pi\sigma^{2})^{N/2}} \exp \left( -\frac{1}{2\sigma^{2}} \sum\limits_{n=0}^{N-1} x^{2}[n] + \frac{A}{\sigma^{2}} \sum\limits_{n=0}^{N-1} x[n] \cos(2\pi f_{0} n) - \frac{A^{2}}{2\sigma^{2}} \sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n) \right)
+> \end{align}
+> $$
+> 利用Neyman-Fisher因子分解定理，可以得到**充分统计量**为
+> $$
+> T_{1}(\v{x}) = \sum\limits_{n=0}^{N-1} x[n] \cos(2\pi f_{0} n), \qquad
+> T_{2}(\v{x}) = \sum\limits_{n=0}^{N-1} x^{2}[n]
+> $$
+> 
+> **2. 检查充分统计量的完备性。**
+> 
+> 根据**完备性**的定义，考察方程
+> $$
+> \dint_{-\infty}^{\infty} \left( \dint_{-\infty}^{\infty} \nu(T_{1}, T_{2}) p_{T_{2}  \mid T_{1}} (T_{2} ; \theta) \dif T_{2} \right) p_{T_{1}}(T_{1}; \theta) \dif T_{1} = 0, \qquad \forall \theta
+> $$
+> 注意到 **$T_{1}(\v{x})$ 仍为Gauss分布的随机变量**，$p_{T_{1}}(T_{1}; \theta) > 0$，因此须内层积分
+> $$
+> \dint_{-\infty}^{\infty} \nu(T_{1}, T_{2}) p_{T_{2}  \mid T_{1}} (T_{2} ; \theta) \dif T_{2} = 0, \qquad \forall T_{1}, \theta
+> $$
+> 而 $T_{2} \mid T_{1}$ 服从一个**非中心 $\chi_{v}^{2}(\lambda)$ 分布**，同样有 $p_{T_{2}  \mid T_{1}} (T_{2} ; \theta) > 0$，因此须 $\nu(T_{1}, T_{2}) = 0$，即 $T_{1}(\v{x})$ 和 $T_{2}(\v{x})$ 是**完备的充分统计量**。
+> 
+> **3. 构造无偏函数作为估计量。**
+> 
+> 进而，根据RBLS定理，只需凑出一个无偏估计量 $\hat{\theta} = f(T_{1}, T_{2})$，即得到MVU估计量。为此，先考察两估计量的一阶矩
+> $$
+> \begin{align}
+> & \mathbb{E} \left[ T_{1}(\v{x}) \right] = \sum\limits_{n=0}^{N-1} \mathbb{E} \left[ x[n] \right] \cos(2\pi f_{0} n) = A \sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n) \\
+> & \mathbb{E} \left[ T_{2}(\v{x}) \right] = \sum\limits_{n=0}^{N-1} \mathbb{E} \left[ x^{2}[n] \right] = \sum\limits_{n=0}^{N-1} \left( \mathrm{var}(x[n]) + (\mathbb{E} [x[n]])^{2} \right) 
+> = N \sigma^{2} + A^{2} \sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n)
+> \end{align}
+> $$
+> 注意到对于 $A$ 可以直接凑出无偏函数，即其MVU估计量为
+> $$
+> \hat{A} = \frac{T_{1}(\v{x})}{\sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n)} = \frac{\sum\limits_{n=0}^{N-1} x[n] \cos(2\pi f_{0} n)}{\sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n)}
+> $$
+> 但对于 $\sigma^{2}$ 则**无法无偏地消去 $A^{2}$** 直接凑出无偏函数，因此考虑再引入含有 $A^{2}$ 的二阶矩
+> $$
+> \mathbb{E} \left[ T_{1}^{2}(\v{x}) \right] = \mathrm{var}(T_{1}(\v{x})) + (\mathbb{E} [T_{1}(\v{x})])^{2} = \sigma^{2} \sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n) + A^{2} \left( \sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n) \right)^{2}
+> $$
+> 从而可以消去 $A^{2}$，凑出
+> $$
+> \begin{align}
+> & \mathbb{E} \left[ T_{1}^{2}(\v{x}) \right] \sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n) - \mathbb{E} \left[ T_{2}(\v{x}) \right] \left( \sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n) \right)^{2} \\
+> &= \sigma^{2} \left( \sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n) \right)^{2} - N \sigma^{2} \left( \sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n) \right)^{2} \\
+> &= - (N-1) \left( \sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n) \right)^{2} \cdot \sigma^{2}
+> \end{align}
+> $$
+> 即 $\sigma^{2}$ 的 MVU 估计量为
+> $$
+> \hat{\sigma^{2}} = \frac{1}{N-1} \left( T_{2}(\v{x}) - \frac{T_{1}^{2}(\v{x})}{\sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n)} \right) = \frac{1}{N-1} \left( \sum\limits_{n=0}^{N-1} x^{2}[n] - \frac{\left( \sum\limits_{n=0}^{N-1} x[n] \cos(2\pi f_{0} n) \right)^{2}}{\sum\limits_{n=0}^{N-1} \cos^{2}(2\pi f_{0} n)} \right)
+> $$
+> 
+
+
+
+
