@@ -1,4 +1,6 @@
-## 动态信号模型
+## Kalman滤波的任务
+
+### 动态信号模型
 
 考虑一个具有Markov性质的动态系统，其状态 $s[n]$ 满足如下递推关系
 $$
@@ -6,7 +8,7 @@ s[n] = a s[n-1] + u[n], \qquad n \ge 0
 $$
 其中，$u[n]$ 是均值为0、方差为 $\sigma_{u}^{2}$ 的Gauss白噪声，称为**驱动噪声**，系统的初始状态 $s[-1] \sim \mathcal{N}(\mu_{s}, \sigma_{s}^{2})$ 与驱动噪声 $u[n]$ 互相独立。这个信号模型称为**一阶Gauss-Markov信号模型**，是一个具有记忆性的随机过程。
 
-## Kalman滤波的任务
+### Kalman滤波
 
 Kalman滤波假定信号符合一阶Gauss-Markov信号模型，即有
 $$
@@ -28,6 +30,8 @@ $$
 由于各个随机变量均为Gauss分布，MMSE估计量等价于LMMSE估计量，加上状态方程的递推关系和Markov性，通过旧估计量可以**更新**得到新估计量，即可以**序贯**计算。
 
 为了区分不同数据条件下所得估计量的不同，记 $\hat{s}[n \mid m]$ 表示在观测数据 $x[0], x[1], \cdots, x[m]$ 的条件下对 $s[n]$ 的估计量。这样，Kalman滤波的任务转换为：**已知上一估计量 $\hat{s}[n-1 \mid n-1]$ 及其最小MSE $M[n-1 \mid n-1]$，获得新观测数据 $x[n]$ 后，计算新的估计量 $\hat{s}[n \mid n]$ 及其最小MSE $M[n \mid n]$**。
+
+## Kalman滤波的序贯实现
 
 ### 估计量的分解计算
 
@@ -118,11 +122,11 @@ $$
 > [!theorem] 标量状态标量观测Kalman滤波
 > 对于上述一阶Gauss-Markov信号模型，Kalman滤波的**估计量 $\hat{s}[n \mid n]$** 的更新公式为
 > $$
-> \hat{s}[n \mid n] = a \hat{s}[n-1 \mid n-1] + K[n] \cdot (x[n] - a \hat{s}[n-1 \mid n-1])
+> \hat{s}[n \mid n] = \underbrace{ a \hat{s}[n-1 \mid n-1] }_{ \text{预测} } + \underbrace{ K[n] \cdot (x[n] - a \hat{s}[n-1 \mid n-1]) }_{ \text{修正} }
 > $$
 > 这一估计的**最小MSE $M[n \mid n]$** 的更新公式为
 > $$
-> M[n \mid n] = (1 - K[n]) \cdot M[n \mid n-1] = (1 - K[n]) \cdot (a^{2} M[n-1 \mid n-1] + \sigma_{u}^{2})
+> M[n \mid n] = \underbrace{ (1 - K[n]) \cdot \underbrace{ M[n \mid n-1] }_{ \text{预测} } }_{ \text{修正} } = (1 - K[n]) \cdot (a^{2} M[n-1 \mid n-1] + \sigma_{u}^{2})
 > $$
 > 其中，**Kalman增益 $K[n]$** 为
 > $$
@@ -131,3 +135,118 @@ $$
 > 上述更新公式的初始条件为 $\hat{s}[-1 \mid -1] = 0$、$M[-1 \mid -1] = \sigma_{s}^{2}$。
 
 对于非零均值信号模型，即起始条件 $s[-1] \sim \mathcal{N}(\mu_{s}, \sigma_{s}^{2})$，上面的Kalman滤波估计量更新公式依然适用，只是初始化条件变为 $\hat{s}[-1 \mid -1] = \mu_{s}$、$M[-1 \mid -1] = \sigma_{s}^{2}$。
+
+## 矢量及扩展Kalman滤波
+
+### 矢量状态标量观测Kalman滤波
+
+假定信号模型为
+$$
+\begin{cases}
+\text{状态方程} & \v{s}[n] = \boldsymbol{A} \v{s}[n-1] + \boldsymbol{B} \v{u}[n],  \\
+\text{观测方程} & x[n] = \v{h}^{\mathrm{T}}[n] \v{s}[n] + w[n],
+\end{cases} \quad n \ge 0
+$$
+其中，
++ 状态 $\v{s}[n]$ 为 $p \times 1$ 维矢量，$\boldsymbol{A}$、$\boldsymbol{B}$ 分别为 $p \times p$ 和 $p \times r$ 维已知矩阵，$\v{h}[n]$ 为 $p \times 1$ 维已知矢量；
++ **驱动噪声 $\v{u}[n]$** 为 $r \times 1$ 维矢量，样本之间相互独立，且 $\v{u}[n] \sim \mathcal{N}(\v{0}, \boldsymbol{Q})$；
++ **观测噪声 $w[n]$** 相互独立，且 $w[n] \sim \mathcal{N}(0, \sigma_{\mathrm{n}}^{2})$；
++ **初始状态 $\v{s}[-1]$** 服从Gauss分布 $\mathcal{N}(\v{\mu}_{s}, \boldsymbol{C}_{s})$；
++ 驱动噪声 $\v{u}[n]$、观测噪声 $w[n]$ 与初始状态 $\v{s}[-1]$ 互相独立。
+
+对这一信号模型，Kalman滤波的**估计量 $\hat{s}[n \mid n]$** 的更新公式为
+$$
+\hat{\v{s}}[n \mid n] = \boldsymbol{A} \hat{\v{s}}[n-1 \mid n-1] + \v{K}[n]  (x[n] - \v{h}^{\mathrm{T}}[n] \boldsymbol{A} \hat{\v{s}}[n-1 \mid n-1])
+$$
+这一估计的**最小MSE $\boldsymbol{M}[n \mid n]$** 的更新公式为
+$$
+\boldsymbol{M}[n \mid n] = (\boldsymbol{I} - \v{K}[n] \v{h}^{\mathrm{T}}[n]) \boldsymbol{M}[n \mid n-1] = (\boldsymbol{I} - \v{K}[n] \v{h}^{\mathrm{T}}[n]) (\boldsymbol{A} \boldsymbol{M}[n-1 \mid n-1] \boldsymbol{A}^{\mathrm{T}} + \boldsymbol{B} \boldsymbol{Q} \boldsymbol{B}^{\mathrm{T}})
+$$
+其中，**Kalman增益 $\v{K}[n]$** 为 $p \times 1$ 维矢量，具体为
+$$
+\v{K}[n] = \frac{\boldsymbol{M}[n \mid n-1] \v{h}[n]}{\sigma_{\mathrm{n}}^{2} + \v{h}^{\mathrm{T}}[n] \boldsymbol{M}[n \mid n-1] \v{h}[n]} 
+= \frac{(\boldsymbol{A} \boldsymbol{M}[n-1 \mid n-1] \boldsymbol{A}^{\mathrm{T}} + \boldsymbol{B} \boldsymbol{Q} \boldsymbol{B}^{\mathrm{T}}) \v{h}[n]}{\sigma_{\mathrm{n}}^{2} + \v{h}^{\mathrm{T}}[n] (\boldsymbol{A} \boldsymbol{M}[n-1 \mid n-1] \boldsymbol{A}^{\mathrm{T}} + \boldsymbol{B} \boldsymbol{Q} \boldsymbol{B}^{\mathrm{T}}) \v{h}[n]}
+$$
+上述更新公式的初始条件为 $\hat{\v{s}}[-1 \mid -1] = \v{\mu}_{s}$、$\boldsymbol{M}[-1 \mid -1] = \boldsymbol{C}_{s}$。
+
+### 矢量状态矢量观测Kalman滤波
+
+假定信号模型为
+$$
+\begin{cases}
+\text{状态方程} & \v{s}[n] = \boldsymbol{A} \v{s}[n-1] + \boldsymbol{B} \v{u}[n],  \\
+\text{观测方程} & \v{x}[n] = \boldsymbol{H}[n] \v{s}[n] + \v{w}[n],
+\end{cases} \quad n \ge 0
+$$
+其中，
++ 状态 $\v{s}[n]$ 为 $p \times 1$ 维矢量，$\boldsymbol{A}$、$\boldsymbol{B}$ 分别为 $p \times p$ 和 $p \times r$ 维已知矩阵，$\boldsymbol{H}[n]$ 为 $M \times p$ 维已知矩阵；
++ **驱动噪声 $\v{u}[n]$** 为 $r \times 1$ 维矢量，样本之间相互独立，且 $\v{u}[n] \sim \mathcal{N}(\v{0}, \boldsymbol{Q})$；
++ **观测噪声 $\v{w}[n]$** 为 $M \times 1$ 维矢量，样本之间相互独立，且 $\v{w}[n] \sim \mathcal{N}(\v{0}, \boldsymbol{C}[n])$；
++ **初始状态 $\v{s}[-1]$** 服从Gauss分布 $\mathcal{N}(\v{\mu}_{s}, \boldsymbol{C}_{s})$；
++ 驱动噪声 $\v{u}[n]$、观测噪声 $\v{w}[n]$ 与初始状态 $\v{s}[-1]$ 互相独立。
+
+对这一信号模型，Kalman滤波的**估计量 $\hat{s}[n \mid n]$** 的更新公式为
+$$
+\hat{\v{s}}[n \mid n] = \boldsymbol{A} \hat{\v{s}}[n-1 \mid n-1] + \boldsymbol{K}[n]  (\v{x}[n] - \boldsymbol{H}[n] \boldsymbol{A} \hat{\v{s}}[n-1 \mid n-1])
+$$
+这一估计的**最小MSE $\boldsymbol{M}[n \mid n]$** 的更新公式为
+$$
+\boldsymbol{M}[n \mid n] = (\boldsymbol{I} - \boldsymbol{K}[n] \boldsymbol{H}[n]) \boldsymbol{M}[n \mid n-1] = (\boldsymbol{I} - \boldsymbol{K}[n] \boldsymbol{H}[n]) (\boldsymbol{A} \boldsymbol{M}[n-1 \mid n-1] \boldsymbol{A}^{\mathrm{T}} + \boldsymbol{B} \boldsymbol{Q} \boldsymbol{B}^{\mathrm{T}})
+$$
+其中，**Kalman增益 $\boldsymbol{K}[n]$** 为 $p \times M$ 维矩阵，具体为
+$$
+\boldsymbol{K}[n] = \boldsymbol{M}[n \mid n-1] \boldsymbol{H}^{\mathrm{T}}[n] (\boldsymbol{C}[n] + \boldsymbol{H}[n] \boldsymbol{M}[n \mid n-1] \boldsymbol{H}^{\mathrm{T}}[n])^{-1}
+$$
+上述更新公式的初始条件为 $\hat{\v{s}}[-1 \mid -1] = \v{\mu}_{s}$、$\boldsymbol{M}[-1 \mid -1] = \boldsymbol{C}_{s}$。
+
+### 扩展Kalman滤波
+
+假定信号模型为非线性的动态系统，即
+$$
+\begin{cases}
+\text{状态方程} & \v{s}[n] = \v{a}(\v{s}[n-1]) + \boldsymbol{B} \v{u}[n],  \\
+\text{观测方程} & \v{x}[n] = \v{h}(\v{s}[n]) + \v{w}[n],
+\end{cases} \quad n \ge 0
+$$
+其中，
++ 状态 $\v{s}[n]$ 为 $p \times 1$ 维矢量，$\v{a}(\cdot)$ 和 $\v{h}(\cdot)$ 分别为 $p$ 维、$M$ 维非线性函数，$\boldsymbol{B}$ 为 $p \times r$ 维已知矩阵；
++ **驱动噪声 $\v{u}[n]$** 为 $r \times 1$ 维矢量，样本之间相互独立，且 $\v{u}[n] \sim \mathcal{N}(\v{0}, \boldsymbol{Q})$；
++ **观测噪声 $\v{w}[n]$** 为 $M \times 1$ 维矢量，样本之间相互独立，且 $\v{w}[n] \sim \mathcal{N}(\v{0}, \boldsymbol{C}[n])$；
++ **初始状态 $\v{s}[-1]$** 服从Gauss分布 $\mathcal{N}(\v{\mu}_{s}, \boldsymbol{C}_{s})$；
++ 驱动噪声 $\v{u}[n]$、观测噪声 $\v{w}[n]$ 与初始状态 $\v{s}[-1]$ 互相独立。
+
+对这一信号模型，考虑使用**一阶Taylor级数展开**线性化，得到
+$$
+\begin{align}
+& \v{a}(\v{s}[n-1]) \approx \v{a}(\hat{\v{s}}[n-1 \mid n-1]) + \boldsymbol{A}[n-1] (\v{s}[n-1] - \hat{\v{s}}[n-1 \mid n-1]) \\
+& \v{h}(\v{s}[n]) \approx \v{h}(\hat{\v{s}}[n \mid n-1]) + \boldsymbol{H}[n] (\v{s}[n] - \hat{\v{s}}[n \mid n-1])
+\end{align}
+$$
+其中，$\boldsymbol{A}[n-1]$ 和 $\boldsymbol{H}[n]$ 分别为 $\v{a}(\cdot)$ 和 $\v{h}(\cdot)$ 在 $\hat{\v{s}}[n-1 \mid n-1]$ 和 $\hat{\v{s}}[n \mid n-1]$ 处的Jacobian矩阵，即
+$$
+\boldsymbol{A}[n-1] = \frac{ \partial \v{a} }{ \partial \v{s}[n-1] } \Bigg|_{\v{s}[n-1] = \hat{\v{s}}[n-1 \mid n-1]}, \qquad \boldsymbol{H}[n] = \frac{ \partial \v{h} }{ \partial \v{s}[n] } \Bigg|_{\v{s}[n] = \hat{\v{s}}[n \mid n-1]}
+$$
+整理得到扩展Kalman滤波的**估计量 $\hat{\v{s}}[n \mid n]$** 的更新公式为
+$$
+\hat{\v{s}}[n \mid n] = \v{a}(\hat{\v{s}}[n-1 \mid n-1]) + \boldsymbol{K}[n]  (\v{x}[n] - \v{h}(\hat{\v{s}}[n \mid n-1]))
+$$
+这一估计的**最小MSE $\boldsymbol{M}[n \mid n]$** 的更新公式为
+$$
+\begin{align} 
+\boldsymbol{M}[n \mid n] &= (\boldsymbol{I} - \boldsymbol{K}[n] \boldsymbol{H}[n]) \boldsymbol{M}[n \mid n-1]  \\
+&= (\boldsymbol{I} - \boldsymbol{K}[n] \boldsymbol{H}[n]) (\boldsymbol{A}[n-1] \boldsymbol{M}[n-1 \mid n-1] \boldsymbol{A}^{\mathrm{T}}[n-1] + \boldsymbol{B} \boldsymbol{Q} \boldsymbol{B}^{\mathrm{T}}) 
+\end{align}
+$$
+其中，**Kalman增益 $\boldsymbol{K}[n]$** 为 $p \times M$ 维矩阵，具体为
+$$
+\boldsymbol{K}[n] = \boldsymbol{M}[n \mid n-1] \boldsymbol{H}^{\mathrm{T}}[n] (\boldsymbol{C}[n] + \boldsymbol{H}[n] \boldsymbol{M}[n \mid n-1] \boldsymbol{H}^{\mathrm{T}}[n])^{-1}
+$$
+预测量 $\hat{\v{s}}[n \mid n-1]$ 为
+$$
+\hat{\v{s}}[n \mid n-1] = \v{a}(\hat{\v{s}}[n-1 \mid n-1])
+$$
+最小预测MSE $\boldsymbol{M}[n \mid n-1]$ 为
+$$
+\boldsymbol{M}[n \mid n-1] = \boldsymbol{A}[n-1] \boldsymbol{M}[n-1 \mid n-1] \boldsymbol{A}^{\mathrm{T}}[n-1] + \boldsymbol{B} \boldsymbol{Q} \boldsymbol{B}^{\mathrm{T}}
+$$
+上述更新公式的初始条件为 $\hat{\v{s}}[-1 \mid -1] = \v{\mu}_{s}$、$\boldsymbol{M}[-1 \mid -1] = \boldsymbol{C}_{s}$。

@@ -1,0 +1,24 @@
+{
+  "id": "conv-1780835030599-fe1w6ndkq",
+  "providerId": "claude",
+  "title": "Draw standard and noncentral chi-square in TikZ",
+  "titleGenerationStatus": "success",
+  "createdAt": 1780835030600,
+  "updatedAt": 1780835388168,
+  "lastResponseAt": 1780835388168,
+  "sessionId": "b5495ba7-b3d9-4573-b62e-31c2f12aafde",
+  "providerState": {
+    "providerSessionId": "b5495ba7-b3d9-4573-b62e-31c2f12aafde"
+  },
+  "currentNote": "统计信号处理基础/信号检测.md",
+  "usage": {
+    "model": "deepseek-v4-pro[1m]",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 1000000,
+    "contextTokens": 0,
+    "percentage": 0,
+    "contextWindowIsAuthoritative": true
+  }
+}
