@@ -1,0 +1,24 @@
+{
+  "id": "conv-1780821290937-r8izee9dx",
+  "providerId": "claude",
+  "title": "Complete solution process",
+  "titleGenerationStatus": "success",
+  "createdAt": 1780821290937,
+  "updatedAt": 1780821391338,
+  "lastResponseAt": 1780821391338,
+  "sessionId": "f0fccca7-efba-4167-9e19-3e6882868301",
+  "providerState": {
+    "providerSessionId": "f0fccca7-efba-4167-9e19-3e6882868301"
+  },
+  "currentNote": "统计信号处理基础/Wiener滤波.md",
+  "usage": {
+    "model": "deepseek-v4-pro[1m]",
+    "inputTokens": 6716,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 23424,
+    "contextWindow": 1000000,
+    "contextTokens": 30140,
+    "percentage": 3,
+    "contextWindowIsAuthoritative": true
+  }
+}

@@ -6,7 +6,7 @@
 > **线性最小均方误差 (linear minimum mean square error, LMMSE) 估计**是指在所有**线性估计量**中，具有最小均方误差的估计量，也称**线性Bayes估计**。
 
 具体地，LMMSE 要求
-1. 估计量 $\hat{\theta}$ 对观察数据 $\v{x}$ 是**线性**的，即 $\hat{\theta} = \sum\limits_{n=0}^{N-1} a_{n} x[n] + a_{N}$，其中 $\v{a} = (a_{0}, a_{1}, \cdots, a_{N-1})^{\mathrm{T}}$ 是一个 $N$ 维的权重向量，$a_{N}$ 是一个常数项；
+1. 估计量 $\hat{\theta}$ 对观察数据 $\v{x}$ 是**线性**的，即 **$\hat{\theta} = \sum\limits_{n=0}^{N-1} a_{n} x[n] + a_{N}$**，其中 $\v{a} = (a_{0}, a_{1}, \cdots, a_{N-1})^{\mathrm{T}}$ 是一个 $N$ 维的权重向量，$a_{N}$ 是一个常数项；
 2. 估计量 $\hat{\theta}$ 的 **Bayes均方误差** $\mathrm{Bmse} (\hat{\theta}) = \mathbb{E} \left[ (\theta - \hat{\theta})^{2} \right]$ 最小。
 
 与BLUE不同的是，LMMSE估计量**不要求满足无偏性约束**，因此在某些情况下可能具有更小的均方误差。
@@ -181,10 +181,10 @@ $$
 
 一般地，**序贯LMMSE估计**的更新公式为
 $$
-\begin{cases}
-\hat{\theta}[N] = \hat{\theta}[N-1] + K[N] \left( x[N] - \hat{\theta}[N-1] \right), \\
-\mathrm{Bmse}(\hat{\theta}[N]) = (1 - K[N]) \cdot \mathrm{Bmse}(\hat{\theta}[N-1]),
-\end{cases} \qquad
+\mark{ \begin{cases}
+\hat{\theta}[N] = \hat{\theta}[N-1] + \underbrace{ \dfrac{\mathrm{Bmse}(\hat{\theta}[N-1])}{\mathrm{Bmse}(\hat{\theta}[N-1]) + \sigma_{w}^{2}} }_{ K[N] } \left( x[N] - \hat{\theta}[N-1] \right), \\
+\mathrm{Bmse}(\hat{\theta}[N]) = \underbrace{ \dfrac{\sigma_{w}^{2}}{\mathrm{Bmse}(\hat{\theta}[N-1]) + \sigma_{w}^{2}} }_{ 1 - K[N] } \mathrm{Bmse}(\hat{\theta}[N-1]),
+\end{cases} } \qquad
 N = 1, 2, \cdots
 $$
 其中，增益因子 $K[N] = \dfrac{\mathrm{Bmse}(\hat{\theta}[N-1])}{\mathrm{Bmse}(\hat{\theta}[N-1]) + \sigma_{w}^{2}}$，$\sigma_{w}^{2}$ 是新观测数据 $x[N]$ 的噪声方差。
@@ -198,5 +198,5 @@ $$
 $$
 若取 $\begin{cases} \hat{A}[-1] = \mathbb{E} \left[ A \right], \\ \mathrm{Bmse}(\hat{A}[-1]) = \sigma_{A}^{2} \end{cases}$ 作为初始值，则上述更新公式将同样适用。推广到一般的序贯LMMSE估计中，**初始值**即取为**先验值**
 $$
-\hat{\theta}[-1] = \mathbb{E}[\theta], \qquad \mathrm{Bmse}(\hat{\theta}[-1]) = \boldsymbol{C}_{\theta \theta}
+\mark{ \hat{\theta}[-1] = \mathbb{E}[\theta], \qquad \mathrm{Bmse}(\hat{\theta}[-1]) = \boldsymbol{C}_{\theta \theta} }
 $$

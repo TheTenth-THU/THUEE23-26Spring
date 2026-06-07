@@ -15,7 +15,12 @@ $$
 > $$
 > \mathrm{Bmse} (\hat{\theta}) = \mathbb{E} \left[ (\theta - \hat{\theta})^{2} \right]  = \iint (\hat{\theta} - \theta)^{2} p(\v{x}, \theta) \dif \v{x} \dif \theta
 > $$
-> 注意 $\mathbb{E} \left[ (\theta - \hat{\theta})^{2} \right]$ 是一种带有约定俗成性质的简单记号，若交换 $\theta$ 和 $\hat{\theta}$ 的位置则一般表示经典MSE。
+> 
+
+需要注意，$\mathbb{E} \left[ (\theta - \hat{\theta})^{2} \right]$ 是一种带有约定俗成性质的简单记号，若交换 $\theta$ 和 $\hat{\theta}$ 的位置则一般表示[[经典参数估计#均方误差 (MSE) 准则|经典MSE]]
+$$
+\mathrm{mse}(\hat{\theta}) = \mathbb{E} \left[ (\hat{\theta} - \theta)^{2} \right] = \int (\hat{\theta} - \theta)^{2} p(\v{x}; \theta) \dif \v{x}
+$$
 
 ## MMSE估计
 
@@ -50,17 +55,18 @@ $$
 $$
 即，**MMSE估计量是参数 $\theta$ 基于后验分布 $p(\theta \mid \v{x})$ 的均值**。
 
-> [!example]- 求解 MMSE 估计量：示例
-> 
-> 考虑白噪声中电平估计问题
+> [!example]- 求解 MMSE 估计量：示例 ^Example-MMSE
+>
+> **白噪声中电平估计问题。**
+> 考虑
 > $$
-> x[n] = A + w[n], \quad n = 0, 1, \dots, N-1
+> x[n] = A + w[n], \qquad n = 0, 1, \dots, N-1
 > $$
-> 其中待估计参数为信号幅度 $A$，噪声 $w[n]$ 是均值为0、方差为 $\sigma^{2}$ 的Gauss白噪声。假设 $A$ 的先验分布为Gauss分布 $\mathcal{N}(\mu_{A}, \sigma^{2}_{A})$，求 $A$ 的MMSE估计量。
+> 其中待估计参数为信号幅度 $A$，噪声 $w[n]$ 是均值为0、方差为 $\sigma^{2}$ 的Gauss白噪声。**假设 $A$ 的先验分布为Gauss分布 $\mathcal{N}(\mu_{A}, \sigma^{2}_{A})$**，求 $A$ 的MMSE估计量。
 > 
 > ---
 > 
-> 欲求解 $A$ 的MMSE估计量 $\hat{A}$，首先写出 $A$ 的后验分布 $p(A \mid \v{x}) = \frac{p(\v{x} \mid A) p(A)}{\dint_{-\infty}^{+\infty} p(\v{x} \mid A) p(A) \dif A}$，其中
+> 欲求解 $A$ 的MMSE估计量 $\hat{A}$，首先**写出 $A$ 的后验分布** $p(A \mid \v{x}) = \frac{p(\v{x} \mid A) p(A)}{\dint_{-\infty}^{+\infty} p(\v{x} \mid A) p(A) \dif A}$，其中
 > $$
 > p(\v{x} \mid A) = \prod_{n=0}^{N-1} \frac{1}{\sqrt{2\pi \sigma^{2}}} \exp \left( -\frac{(x[n] - A)^{2}}{2\sigma^{2}} \right) = \frac{1}{(2\pi \sigma^{2})^{N/2}} \exp \left( -\frac{1}{2\sigma^{2}} \sum_{n=0}^{N-1} (x[n] - A)^{2} \right)
 > $$
@@ -90,6 +96,8 @@ $$
 > p(A \mid \v{x}) = \frac{p(\v{x} \mid A) p(A)}{\dint_{-\infty}^{+\infty} p(\v{x} \mid A) p(A) \dif A}
 > = \frac{1}{\sqrt{2\pi \sigma_{A\mid \v{x}}^{2}}} \exp \left( -\frac{(A - \mu_{A\mid \v{x}})^{2}}{2\sigma_{A\mid \v{x}}^{2}} \right)
 > $$
+> 服从**均值为 $\mu_{A\mid \v{x}}$、方差为 $\sigma_{A\mid \v{x}}^{2}$ 的Gauss分布**。
+> 
 > 于是MMSE估计量为
 > $$
 > \hat{A} = \int A p(A \mid \v{x}) \dif A = \mathbb{E} \left[ A \mid \v{x} \right] = \mu_{A\mid \v{x}} = \sigma_{A\mid \v{x}}^{2} \left( \frac{1}{\sigma^{2}} \sum_{n=0}^{N-1} x[n] + \frac{\mu_{A}}{\sigma_{A}^{2}} \right) = \frac{\sigma_{A}^{2} \sum\limits_{n=0}^{N-1} x[n] + \sigma^{2} \mu_{A}}{N\sigma_{A}^{2} + \sigma^{2}}
@@ -103,8 +111,30 @@ $$
 > \end{align}
 > $$
 
-### MMSE的性能分析
+### 矢量参数MMSE估计
 
+当存在未知而不感兴趣的参数时，Bayes框架下可**通过积分消除这些参数**的影响，即
+$$
+p(\v{\theta} \mid \v{x}) = \dint p(\v{\theta}, \v{\alpha} \mid \v{x}) \dif \v{\phi}, \qquad
+p(\v{x} \mid \v{\theta}) = \dint p(\v{x} \mid \v{\theta}, \v{\alpha}) p(\v{\alpha} \mid \v{\theta}) \dif \v{\alpha}
+$$
+进而求得MMSE估计量。
+
+进一步地，为了估计矢量参数 $\v{\theta}$，可依次估计每个参数 $\theta_{i}$ 而将剩余参数视为暂不感兴趣的参数，即得到
+$$
+\hat{\theta}_{i} = \int \theta_{i} p(\theta_{i} \mid \v{x}) \dif \theta_{i} 
+= \int \theta_{i} \left( \idotsint p(\v{\theta} \mid \v{x}) \prod_{j \neq i} \dif \theta_{j} \right) \dif \theta_{i} 
+= \int \theta_{i} p(\v{\theta} \mid \v{x}) \dif \v{\theta}
+$$
+因此矢量参数 $\v{\theta}$ 的MMSE估计量为
+$$
+\hat{\v{\theta}} = \begin{pmatrix}
+\hat{\theta}_{1} \\ \hat{\theta}_{2} \\ \vdots \\ \hat{\theta}_{M}
+\end{pmatrix} = \int \begin{pmatrix}
+\theta_{1} \\ \theta_{2} \\ \vdots \\ \theta_{M}
+\end{pmatrix} p(\v{\theta} \mid \v{x}) \dif \v{\theta}
+= \int \v{\theta} p(\v{\theta} \mid \v{x}) \dif \v{\theta} = \mathbb{E}[\v{\theta} \mid \v{x}]
+$$
 
 ### MMSE估计量的性质
 
@@ -131,29 +161,4 @@ $$
 \hat{\v{\theta}} = \mathbb{E} \left[ \v{\theta} \mid[\Big] \v{x} \right] &= \mathbb{E} \left[ \v{\theta} \right] + \boldsymbol{C}_{\theta x_{1}} \boldsymbol{C}_{x_{1} x_{1}}^{-1} (\v{x}_{1} - \mathbb{E}[\v{x}_{1}]) + \boldsymbol{C}_{\theta x_{2}} \boldsymbol{C}_{x_{2} x_{2}}^{-1} (\v{x}_{2} - \mathbb{E}[\v{x}_{2}]) \\
 &= \mathbb{E} \left[ \v{\theta} \mid[\Big] \v{x}_{1} \right] + \mathbb{E} \left[ \v{\theta} \mid[\Big] \v{x}_{2} \right] - \mathbb{E} \left[ \v{\theta} \right]
 \end{align}
-$$
-
-## 矢量参数MMSE估计
-
-当存在未知而不感兴趣的参数时，Bayes框架下可**通过积分消除这些参数**的影响，即
-$$
-p(\v{\theta} \mid \v{x}) = \dint p(\v{\theta}, \v{\alpha} \mid \v{x}) \dif \v{\phi}, \qquad
-p(\v{x} \mid \v{\theta}) = \dint p(\v{x} \mid \v{\theta}, \v{\alpha}) p(\v{\alpha} \mid \v{\theta}) \dif \v{\alpha}
-$$
-进而求得MMSE估计量。
-
-进一步地，为了估计矢量参数 $\v{\theta}$，可依次估计每个参数 $\theta_{i}$ 而将剩余参数视为暂不感兴趣的参数，即得到
-$$
-\hat{\theta}_{i} = \int \theta_{i} p(\theta_{i} \mid \v{x}) \dif \theta_{i} 
-= \int \theta_{i} \left( \idotsint p(\v{\theta} \mid \v{x}) \prod_{j \neq i} \dif \theta_{j} \right) \dif \theta_{i} 
-= \int \theta_{i} p(\v{\theta} \mid \v{x}) \dif \v{\theta}
-$$
-因此矢量参数 $\v{\theta}$ 的MMSE估计量为
-$$
-\hat{\v{\theta}} = \begin{pmatrix}
-\hat{\theta}_{1} \\ \hat{\theta}_{2} \\ \vdots \\ \hat{\theta}_{M}
-\end{pmatrix} = \int \begin{pmatrix}
-\theta_{1} \\ \theta_{2} \\ \vdots \\ \theta_{M}
-\end{pmatrix} p(\v{\theta} \mid \v{x}) \dif \v{\theta}
-= \int \v{\theta} p(\v{\theta} \mid \v{x}) \dif \v{\theta} = \mathbb{E}[\v{\theta} \mid \v{x}]
 $$

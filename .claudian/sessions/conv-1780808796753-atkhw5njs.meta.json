@@ -1,0 +1,24 @@
+{
+  "id": "conv-1780808796753-atkhw5njs",
+  "providerId": "claude",
+  "title": "Explain correction under H^T H inverse along A^T",
+  "titleGenerationStatus": "success",
+  "createdAt": 1780808796753,
+  "updatedAt": 1780821267807,
+  "lastResponseAt": 1780808873355,
+  "sessionId": "25af6dbe-bf00-4bd7-a173-9fdba2ec69ce",
+  "providerState": {
+    "providerSessionId": "25af6dbe-bf00-4bd7-a173-9fdba2ec69ce"
+  },
+  "currentNote": "统计信号处理基础/最小二乘估计 (LSE).md",
+  "usage": {
+    "model": "deepseek-v4-pro[1m]",
+    "inputTokens": 2198,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 20352,
+    "contextWindow": 1000000,
+    "contextTokens": 22550,
+    "percentage": 2,
+    "contextWindowIsAuthoritative": true
+  }
+}

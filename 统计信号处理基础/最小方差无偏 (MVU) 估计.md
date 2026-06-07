@@ -102,7 +102,7 @@ CRLB 还可用于求解 MVU 估计量，将对数似然函数的导数表达为 
 + $\mathcal{I}(\theta)$ 是 $\theta$ 的函数，**不能与观测数据 $\v{x}$ 有关**。
 + $g(\v{x})$ 是 $\v{x}$ 的函数，**不能与待估计参数 $\theta$ 有关**。
 
-> [!example]- 使用CRLB求解MVU：示例 
+> [!example]- 使用CRLB求解MVU：示例 ^Example-MVU-CRLB
 > 
 > **电平估计。** 
 > 

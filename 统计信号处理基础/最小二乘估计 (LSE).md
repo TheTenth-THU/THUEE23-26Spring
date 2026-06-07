@@ -72,7 +72,7 @@ $$
 
 一种常见的加权最小二乘估计是**广义最小二乘估计 (generalized least squares estimation)**，即当观测数据 $\v{x}$ 的协方差矩阵为 $\boldsymbol{C}$ 时，取 $\boldsymbol{W} = \boldsymbol{C}^{-1}$，得到
 $$
-\hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \v{x}
+\mark{ \hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \v{x} }
 $$
 这个结果与 [[最小方差无偏 (MVU) 估计|MVU]]、[[最佳线性无偏估计 (BLUE)|BLUE]]、[[最大似然估计 (MLE)|MLE]] 对有色线性模型的估计结果及 [[最佳线性无偏估计 (BLUE)#^Gauss-Markov-Theorem|Gauss-Markov 定理]]的结论均相同。
 
@@ -84,11 +84,12 @@ $$
 $$
 此时的最小二乘误差应进一步构成 Lagrange 函数
 $$
-J_{\mathrm{c}} = (\v{x} - \boldsymbol{H}\v{\theta})^{\mathrm{T}} (\v{x} - \boldsymbol{H}\v{\theta}) + \v{\lambda}^{\mathrm{T}} (\boldsymbol{A} \v{\theta} - \v{b})
+J_{\mathrm{c}}(\v{\theta}, \v{\lambda}) = (\v{x} - \boldsymbol{H}\v{\theta})^{\mathrm{T}} (\v{x} - \boldsymbol{H}\v{\theta}) + \v{\lambda}^{\mathrm{T}} (\boldsymbol{A} \v{\theta} - \v{b})
 $$
 约束最小二乘估计量 $\hat{\v{\theta}}_{\mathrm{c}}$ 满足
 $$
 \frac{ \partial J_{\mathrm{c}} }{ \partial \v{\theta} } \Bigg|_{\hat{\v{\theta}}_{\mathrm{c}}} = \v{0}
 \implies 
-\hat{\v{\theta}}_{\mathrm{c}} = \hat{\v{\theta}} - (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1} \boldsymbol{A}^{\mathrm{T}} \underbrace{ \left( \boldsymbol{A} (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1} \boldsymbol{A}^{\mathrm{T}} \right)^{-1} (\boldsymbol{A} \hat{\v{\theta}} - \v{b}) }_{ \tfrac{\v{\lambda}}{2} }
+\hat{\v{\theta}}_{\mathrm{c}} = \hat{\v{\theta}} - (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1} \boldsymbol{A}^{\mathrm{T}} \underbrace{ \left( \boldsymbol{A} (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1} \boldsymbol{A}^{\mathrm{T}} \right)^{-1} (\boldsymbol{A} \hat{\v{\theta}} - \v{b}) }_{ \v{\lambda}/2 }
 $$
+其中 $\hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} \v{x}$ 是无约束条件下的最小二乘估计量，约束估计量 $\hat{\v{\theta}}_{\mathrm{c}}$ 相当于在无约束估计量 $\hat{\v{\theta}}$ 的基础上，沿着 $\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H}$ 的逆矩阵作用下的 $\boldsymbol{A}^{\mathrm{T}}$ 方向进行修正，使得最终的估计量满足约束条件 $\boldsymbol{A} \hat{\v{\theta}}_{\mathrm{c}} = \v{b}$。

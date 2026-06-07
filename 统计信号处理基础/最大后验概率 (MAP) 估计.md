@@ -7,7 +7,7 @@ $$
 C(\varepsilon) = \begin{cases}
 0, & \text{if } |\varepsilon| < \delta \\
 1, & \text{otherwise}
-\end{cases}
+\end{cases} = \mathbb{1}(|\varepsilon| \geq \delta)
 $$
 因此得到的Bayes风险为
 $$
