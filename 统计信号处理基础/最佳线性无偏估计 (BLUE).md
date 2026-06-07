@@ -60,13 +60,13 @@ $$
 $$
 其**各个分量的方差**（注意未给出协方差）为
 $$
-\mathrm{var} (\hat{\theta}_{i}) = \left( \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H} \right)^{-1}_{[i,i]}
+\mathrm{var} (\hat{\theta}_{i}) = \left( \left( \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H} \right)^{-1} \right) _{i,i}
 $$
 
 注意到，**线性模型的MVU估计量**与**矢量参数BLUE**的表达式基本相同。事实上，有以下定理：
 
 > [!theorem] {Gauss|高斯}-{Markov|马尔可夫} 定理 ^Gauss-Markov-Theorem
-> 如果数据具有一般线性模型的形式 
+> 如果数据具有**一般线性模型**的形式 
 > $$
 > \v{x} = \boldsymbol{H} \v{\theta} + \v{w}
 > $$
@@ -74,7 +74,8 @@ $$
 > $$
 > \hat{\v{\theta}} = \left( \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H} \right)^{-1} \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \v{x}
 > $$
-> 其**协方差矩阵**为 $\boldsymbol{C}_{\hat{\v{\theta}}} = \left( \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H} \right)^{-1}$，即每个分量的方差为 $\mathrm{var} (\hat{\theta}_{i}) = \left( \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H} \right)^{-1}_{[i,i]}$。
+> 其**协方差矩阵**为 $\boldsymbol{C}_{\hat{\v{\theta}}} = \left( \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H} \right)^{-1}$，即每个分量的方差为 $\mathrm{var} (\hat{\theta}_{i}) = \left( \left( \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H} \right)^{-1} \right) _{i,i}$。
 > 
-> 若 $\v{w}$ 为Gauss噪声，则上述BLUE估计量也是$\v{\theta}$的MVU估计量。
+
+特别地，若 $\v{w}$ 为Gauss噪声，则上述 **BLUE估计量也是 $\v{\theta}$ 的MVU估计量**。
 

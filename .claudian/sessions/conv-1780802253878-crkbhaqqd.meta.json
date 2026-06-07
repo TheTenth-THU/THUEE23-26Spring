@@ -1,0 +1,24 @@
+{
+  "id": "conv-1780802253878-crkbhaqqd",
+  "providerId": "claude",
+  "title": "Compare CRLB regularity conditions",
+  "titleGenerationStatus": "success",
+  "createdAt": 1780802253878,
+  "updatedAt": 1780802425375,
+  "lastResponseAt": 1780802425375,
+  "sessionId": "a236b78d-1a38-441f-b5e1-bb5df8381271",
+  "providerState": {
+    "providerSessionId": "a236b78d-1a38-441f-b5e1-bb5df8381271"
+  },
+  "currentNote": "统计信号处理基础/最大似然估计 (MLE).md",
+  "usage": {
+    "model": "deepseek-v4-pro[1m]",
+    "inputTokens": 803,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 40448,
+    "contextWindow": 1000000,
+    "contextTokens": 41251,
+    "percentage": 4,
+    "contextWindowIsAuthoritative": true
+  }
+}

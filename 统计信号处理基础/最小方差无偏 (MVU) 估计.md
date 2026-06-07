@@ -259,7 +259,7 @@ $$
 $$
 因此**线性模型对应的 MVU 估计量是有效估计量**
 $$
-\hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} \v{x}
+\mark{ \hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} \v{x} }
 $$
 其**协方差矩阵**为
 $$
@@ -411,7 +411,7 @@ $$
 1. **允许Gauss噪声有色**，即 $\v{w} \sim \mathcal{N}(\v{0}, \boldsymbol{C})$，其中 $\boldsymbol{C}$ 是一个 $N \times N$ 的协方差矩阵。此时 MVU 估计量为 $\hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \v{x}$，协方差矩阵为 $\boldsymbol{C}_{\hat{\v{\theta}}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{C}^{-1} \boldsymbol{H})^{-1}$。
 2. **允许观测数据 $\v{x}$ 含有已知信号 $\v{s}$**，即 $\v{x} = \boldsymbol{H} \v{\theta} + \v{s} + \v{w}$，其中 $\v{s}$ 是一个已知的 $N$ 维信号。此时 MVU 估计量为 $\hat{\v{\theta}} = (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1} \boldsymbol{H}^{\mathrm{T}} (\v{x} - \v{s})$，协方差矩阵为 $\boldsymbol{C}_{\hat{\v{\theta}}} = \sigma^{2} (\boldsymbol{H}^{\mathrm{T}} \boldsymbol{H})^{-1}$。
 
-> [!theorem] 线性模型的MVU估计量
+> [!theorem] 线性模型的MVU估计量 ^Linear-Model-MVU-Estimator
 > 
 > 对于线性模型 $\v{x} = \boldsymbol{H} \v{\theta} + \v{s} + \v{w}$，其中 $\v{w} \sim \mathcal{N}(\v{0}, \boldsymbol{C})$，待估计参数 **$\v{\theta}$ 的MVU估计量**为
 > $$
