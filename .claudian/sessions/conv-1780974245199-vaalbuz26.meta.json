@@ -4,8 +4,8 @@
   "title": "总结文档逻辑结构",
   "titleGenerationStatus": "failed",
   "createdAt": 1780974245199,
-  "updatedAt": 1780974874846,
-  "lastResponseAt": 1780974874846,
+  "updatedAt": 1781014119260,
+  "lastResponseAt": 1781014119260,
   "sessionId": "704e7fbb-280c-43d7-b8ea-c47a3e1a3f4a",
   "providerState": {
     "providerSessionId": "704e7fbb-280c-43d7-b8ea-c47a3e1a3f4a",
@@ -16,12 +16,12 @@
   "currentNote": "固体物理基础/固体的结构.md",
   "usage": {
     "model": "deepseek-v4-pro[1m]",
-    "inputTokens": 4388,
+    "inputTokens": 503,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 20096,
+    "cacheReadInputTokens": 30848,
     "contextWindow": 1000000,
-    "contextTokens": 24484,
-    "percentage": 2,
+    "contextTokens": 31351,
+    "percentage": 3,
     "contextWindowIsAuthoritative": true
   }
 }
